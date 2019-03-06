@@ -56,14 +56,13 @@
 
 - name: MariaDB Wait {{ item }}
   shell: >
-    mysql -u root -p{{ mariadb_root_password }} -e 'show databases'
+    mysql -u {{mariadb_repl_user}} -p{{ mariadb_repl_pwd }} -h {{item}} -e 'show databases'
   failed_when: false
   register: root_pwd_check
   until: root_pwd_check.rc == 0
   retries: "360"
   delay: 10
   with_items: "{{ mariadb_servers }}"
-  when: inventory_hostname == "{{ item }}"
 
 - name: Enable "{{ mariadb_servers| first }}" > "{{ mariadb_servers| last }}"
   shell: >

@@ -31,6 +31,31 @@
   when: mariadb_configure_swappiness
   tags: mariadb
 
+- name: default dir
+  file:
+    path: "/var/lib/mysql"
+    state: directory
+    mode: 0750
+    owner: mysql
+    group: mysql
+
+- name: data dir
+  file:
+    path: "{{mariadb_datadir}}"
+    state: directory
+    mode: 0750
+    owner: mysql
+    group: mysql
+
+- name: innodb data dir
+  file:
+    path: "{{mariadb_custom_cnf.mariadb.innodb_data_home_dir}}"
+    state: directory
+    mode: 0750
+    owner: mysql
+    group: mysql
+  when: mariadb_custom_cnf.mariadb is defined and mariadb_custom_cnf.mariadb.innodb_data_home_dir is defined
+
 - name: Replication dir
   file:
     path: "{{mariadb_replication_dir}}"
@@ -48,6 +73,16 @@
     owner: mysql
     group: mysql
   when: mariadb_ha_enabled is defined and mariadb_ha_enabled
+
+- name: Check if innodb data file exist
+  stat: 
+    path: "{{mariadb_datadir}}/mysql"
+  register: innodb_file
+  when: "'{{mariadb_datadir}}' != '/var/lib/mysql'"
+
+- name: Create mysql database
+  shell: mysql_install_db --user=mysql --basedir=/usr --datadir="{{mariadb_datadir}}"
+  when: "'{{mariadb_datadir}}' != '/var/lib/mysql' and innodb_file is defined and innodb_file.stat.isdir is not defined"
 
 - name: Ensure service is started
   service:

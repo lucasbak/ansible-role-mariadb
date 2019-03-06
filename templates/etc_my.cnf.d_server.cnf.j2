@@ -3,6 +3,7 @@
 # {{ ansible_managed }}
 
 [mariadb]
+datadir                            = {{ mariadb_datadir }}
 socket                          = {{ mariadb_socket }}
 port                            = {{ mariadb_port }}
 skip_name_resolve               = {{ mariadb_skip_name_resolve }}
@@ -64,6 +65,14 @@ binlog_format                   = 'mixed'
 log-slave-updates               = ''
 replicate-same-server-id        = '0'
 slave-skip-errors               = '1062'
+innodb_data_home_dir            = {{ mariadb_datadir }}
+innodb_data_file_path           = ibdata1:10M:autoextend
+innodb_log_group_home_dir       = {{ mariadb_journal_dir }}
+innodb_buffer_pool_size         = 384M
+innodb_log_file_size            = 100M
+innodb_log_buffer_size          = 8M
+innodb_flush_log_at_trx_commit  = 1
+innodb_lock_wait_timeout        = 50
 {% endif %}
 {% if mariadb_ha_enabled is defined and mariadb_ha_enabled and inventory_hostname == (mariadb_servers | first) %}
 server-id                       = 1
