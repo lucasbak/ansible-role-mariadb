@@ -51,3 +51,23 @@ innodb_log_buffer_size          = {{ mariadb_innodb_log_buffer_size }}
 innodb_log_file_size            = {{ mariadb_innodb_log_file_size }}
 innodb_log_files_in_group       = {{ mariadb_innodb_log_files_in_group }}
 
+# replication configuration
+# enabling binary logs
+{% if mariadb_ha_enabled is defined and mariadb_ha_enabled %}
+
+relay-log                       = {{ mariadb_replication_dir }}/mysql-relay-bin
+relay-log-index                 = {{ mariadb_replication_dir }}/mysql-relay-bin.index
+master-info-file                = {{ mariadb_replication_dir }}/master.info
+relay-log-info-file             = {{ mariadb_replication_dir }}/relay-log.info
+log-bin                         = {{ mariadb_journal_dir }}/bin
+binlog_format                   = 'mixed'
+log-slave-updates               = ''
+replicate-same-server-id        = '0'
+slave-skip-errors               = '1062'
+{% endif %}
+{% if mariadb_ha_enabled is defined and mariadb_ha_enabled and inventory_hostname == (mariadb_servers | first) %}
+server-id                       = 1
+{% else %}
+server-id                       = 2
+{% endif %}
+

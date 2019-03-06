@@ -31,6 +31,24 @@
   when: mariadb_configure_swappiness
   tags: mariadb
 
+- name: Replication dir
+  file:
+    path: "{{mariadb_replication_dir}}"
+    state: directory
+    mode: 0750
+    owner: mysql
+    group: mysql
+  when: mariadb_ha_enabled is defined and mariadb_ha_enabled
+
+- name: Journalog dir
+  file:
+    path: "{{mariadb_journal_dir}}"
+    state: directory
+    mode: 0750
+    owner: mysql
+    group: mysql
+  when: mariadb_ha_enabled is defined and mariadb_ha_enabled
+
 - name: Ensure service is started
   service:
     name: "{{ mariadb_service }}"
