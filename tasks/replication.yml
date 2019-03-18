@@ -86,11 +86,11 @@
   register: master_status_m1
   when: mariadb_servers is defined and inventory_hostname == "{{ mariadb_servers | last }}"
 
-- name: Extract Marster Binary Position  "{{ mariadb_servers | first }}" > "{{ mariadb_servers | last }}"
+- name: Extract Master Binary Position  "{{ mariadb_servers | first }}" > "{{ mariadb_servers | last }}"
   set_fact:
      binary_file_m1: "{{ master_status_m1.stdout_lines[1] | trim | regex_replace('File:', '') }}" #regex_search('^.*File.*$') |
      binary_position_m1: "{{ master_status_m1.stdout_lines[2] | trim | regex_replace('Position:', '')}}" #| regex_search('^.*Position.*$') 
-  when: mariadb_servers is defined and mariadb_ha_enabled and and inventory_hostname == "{{ mariadb_servers | last }}"
+  when: mariadb_servers is defined and mariadb_ha_enabled and inventory_hostname == "{{ mariadb_servers | last }}"
 
 - name: Check Master Position Exist On Slave "{{ mariadb_servers | first }}" > "{{ mariadb_servers | last }}"
   shell: >
@@ -120,7 +120,7 @@
   register: master_status_m1
   when: mariadb_servers is defined and inventory_hostname == "{{ mariadb_servers | first }}"
 
-- name: Extract Marster Binary Position  "{{ mariadb_servers | last }}" > "{{ mariadb_servers | first }}"
+- name: Extract Master Binary Position  "{{ mariadb_servers | last }}" > "{{ mariadb_servers | first }}"
   set_fact:
      binary_file_m2: "{{ master_status_m1.stdout_lines[1] | trim | regex_replace('File:', '') }}" #regex_search('^.*File.*$') |
      binary_position_m2: "{{ master_status_m1.stdout_lines[2] | trim | regex_replace('Position:', '')}}" #| regex_search('^.*Position.*$') 
