@@ -22,5 +22,5 @@
     state: present
   with_items: "{{ mariadb_users }}"
   tags: mariadb
-  when: (mariadb_servers is defined and inventory_hostname is {{ mariadb_servers | first }}) or mariadb_server is defined
+  when: (mariadb_servers is defined and inventory_hostname == "{{ mariadb_servers | first }}") or mariadb_server is defined
 
