@@ -13,5 +13,5 @@
 
 - include_tasks: replication.yml
   when: mariadb_servers is defined and mariadb_ha_enabled
-# - include_tasks: databases.yml
-# - include_tasks: users.yml
+- include_tasks: databases.yml
+- include_tasks: users.yml
