@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+umask 027
+#
+DATE=`date +%Y-%m-%d_%H-%M`
+BACKUP_DIR={{mariadb_backup_dir}}
+{% for database in mariadb_backup_databases %}
+/bin/mysqldump {% if mariadb_backup_host is defined %}-h{{mariadb_backup_host}}{% endif %}  --single-transaction  -u {{mariadb_backup_user}} -p{{mariadb_backup_pwd}} {{database}} --master-data=2 > "{{backup_dir}}/{{database}}_$DATE.sql"
+{% endfor %}

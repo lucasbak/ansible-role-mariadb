@@ -16,3 +16,9 @@
     state: installed
   with_items: "{{ mariadb_packages }}"
   tags: mariadb
+
+- name: Install Backup File
+  copy:
+  src: templates/mariadb_save.sh.j2
+  dest: "{{mariadb_datadir}}/backup.sh"
+  when: mariadb_backup_enabled is defined and mariadb_backup_enabled
