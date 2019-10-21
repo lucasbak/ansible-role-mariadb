@@ -84,6 +84,11 @@
   shell: mysql_install_db --user=mysql --basedir=/usr --datadir="{{mariadb_datadir}}"
   when: "'{{mariadb_datadir}}' != '/var/lib/mysql' and innodb_file is defined and innodb_file.stat.isdir is not defined"
 
+- name: Fix Permission
+  shell: chown -R mysql. {{mariadb_datadir}} 
+  when: "'{{mariadb_datadir}}' != '/var/lib/mysql' and innodb_file is defined and innodb_file.stat.isdir is not defined"
+
+
 - name: Ensure service is started
   service:
     name: "{{ mariadb_service }}"

@@ -26,7 +26,7 @@ mariadb_max_connect_errors: 10
 mariadb_max_connections: 505
 mariadb_max_user_connections: 500
 mariadb_skip_name_resolve: 1
-mariadb_wait_timeout: 60
+mariadb_wait_timeout: 28000
 
 # Logging
 
