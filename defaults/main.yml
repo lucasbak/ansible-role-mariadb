@@ -78,3 +78,4 @@ mariadb_ha_enabled: False
 mariadb_replication_dir: '/var/lib/mysql/replication'
 mariadb_journal_dir: '/var/lib/mysql/journalog'
 mariadb_repl_user: repl
+mariadb_innodb_log_bin_trust_function_creators: 1
