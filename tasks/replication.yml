@@ -163,3 +163,4 @@
 #   when: slave_acl_m2.rc == 1 and mariadb_servers is defined and inventory_hostname == "{{ mariadb_servers | last }}"
 
 
+

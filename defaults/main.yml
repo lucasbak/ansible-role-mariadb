@@ -1,5 +1,6 @@
 # roles/mariadb/defaults/main.yml
 ---
+# ansible_python_interpreter: /usr/bin/python
 
 mariadb_databases: []
 mariadb_users: []

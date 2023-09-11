@@ -1,0 +1,19 @@
+# roles/mariadb/vars/Rocky.yml
+---
+
+# mariadb_packages:
+#   - MariaDB
+#   - MariaDB-server
+#   - MySQL-python
+
+mariadb_packages:
+  - mariadb
+  - mariadb-server
+  - python3-PyMySQL
+  - python2-PyMySQL
+
+mariadb_socket: /var/lib/mysql/mysql.sock
+
+mariadb_config_network: /etc/my.cnf.d/network.cnf
+mariadb_config_server: /etc/my.cnf.d/mariadb-server.cnf
+mariadb_config_custom: /etc/my.cnf.d/custom.cnf

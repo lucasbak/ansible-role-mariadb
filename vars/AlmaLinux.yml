@@ -2,15 +2,10 @@
 ---
 
 mariadb_packages:
-  - MariaDB
-  - MariaDB-server
-  - MySQL-python
-
-
-# mariadb_packages:
-#   - mariadb
-#   - mariadb-server
-#   - python3-PyMySQL
+  - mariadb
+  - mariadb-server
+  - python3-PyMySQL
+  - python2-PyMySQL
 
 mariadb_socket: /var/lib/mysql/mysql.sock
 

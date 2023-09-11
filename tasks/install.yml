@@ -5,17 +5,33 @@
   yum_repository:
     name: MariaDB
     description: Official MariaDB repository
-    baseurl: "http://{{ mariadb_mirror }}/{{ mariadb_version }}/{{ ansible_distribution|lower|regex_replace('redhat', 'rhel')|regex_replace('oraclelinux', 'centos') }}{{ ansible_distribution_major_version }}-amd64"
+    baseurl: "http://{{ mariadb_mirror }}/{{ mariadb_version }}/{{ ansible_distribution|lower|regex_replace('redhat', 'rhel')|regex_replace('oraclelinux', 'centos')|regex_replace('almalinux', 'rhel')|regex_replace('rocky', 'rhel') }}{{ ansible_distribution_major_version }}-amd64"
     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     gpgcheck: false
   tags: mariadb
 
-- name: Install packages
-  package:
+- name: Install packages [yum]
+  yum:
     name: "{{ item }}"
     state: installed
   with_items: "{{ mariadb_packages }}"
   tags: mariadb
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version < '8'
+
+- name: Install packages [dnf]
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ mariadb_packages }}"
+  tags: mariadb
+  when: (ansible_distribution == "Rocky" or ansible_distribution == "CentOS" or ansible_distribution == "AlmaLinux")  and ansible_distribution_major_version >= '8'
+
+# - name: Install packages [dnf]
+#   package:
+#     name: "{{ item }}"
+#     state: installed
+#   with_items: "{{ mariadb_packages }}"
+#   tags: mariadb
 
 - name: Install Backup File
   copy:

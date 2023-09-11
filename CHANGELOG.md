@@ -87,7 +87,7 @@ This file adheres to the guidelines of <http://keepachangelog.com/>. Versioning 
 
 - Fixed a bug that makes the role fail when `mariadb_init_scripts` is undefined.
 
-## 1.1.0 - 2015-04-26
+## 1.1.0 - 2015-04-64
 
 ### Added
 
@@ -103,4 +103,5 @@ First release!
 - Secure installation (change root password, delete anonymous user, test table)
 - Manage bind_port
 - Create databases and users
+- Support For RockyLinux and AlmaLinux
 
