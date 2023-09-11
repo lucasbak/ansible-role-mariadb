@@ -1,0 +1,22 @@
+- hosts: "admin01.clemlab.com"
+  roles:
+    - role: ansible-role-mariadb
+      tags: mariadb
+      vars:
+        mariadb:
+            validate_password_policy: LOW
+        mariadb_user_home: /var/lib/mariadb
+        mariadb_user_name: mysql
+        mariadb_user_password: 'ro0tPassW0rd'
+        mariadb_bind_address: '0.0.0.0'
+        mariadb_repl_pwd: 'Repl!passw0rf'
+        mariadb_backup_enabled: 'False'
+        mariadb_backup_dir: /var/lib/mariadb/backup
+        mariadb_backup_user: root
+        mariadb_databases:
+          - name: 'my_database'
+        mariadb_users:
+          - name: 'toto'
+            host: "%"
+            password: "totoPassword"
+            priv: "my_database.*:ALL"
